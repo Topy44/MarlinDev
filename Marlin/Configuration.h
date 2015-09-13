@@ -741,7 +741,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 
 // Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/P buttons, separate encoder inputs
 //#define LCD_I2C_VIKI
-  
+
 // SSD1306 OLED generic display support
 // ==> REMEMBER TO INSTALL U8glib to your ARDUINO library folder: http://code.google.com/p/u8glib/wiki/u8glib
 //#define U8GLIB_SSD1306
@@ -852,8 +852,18 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 //#define FILAMENT_LCD_DISPLAY
 
 
+/**********************************************************************\
+ * Support for fans (and later other things) connected to an
+ * I2C PWM Controller
+ **********************************************************************/
+// Uncomment below to enable
+#define I2C_PWM
 
+#define I2C_PWM_ADDRESS         0x00
+#define I2C_BITRATE             9600
 
+#define I2C_FAN_PIN             0       // If defined, FAN is connected to this pin of the PWM (and is assumed to be present)
+#define I2C_CONTROLLERFAN_PIN   1       // If defined, CONTROLLERFAN is connected to this pin of the PWM controller (and is assumed to be present)
 
 
 #include "Configuration_adv.h"
