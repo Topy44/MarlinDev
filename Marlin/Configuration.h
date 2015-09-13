@@ -853,17 +853,19 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 
 
 /**********************************************************************\
- * Support for fans (and later other things) connected to an
- * I2C PWM Controller
+ * Support for fans (and other devices) connected to a
+ * PCA9685 I2C PWM controller. Uses Adafruit PWM-Servo-Driver-Library.
+ * https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
+ * Could also be used to control servos, heatbeds, hotends or LEDs.
  **********************************************************************/
 // Uncomment below to enable
-#define I2C_PWM
+//#define I2C_PWM
 
 #define I2C_PWM_ADDR            0x40
-#define I2C_PWM_FREQ            800     // PWM frequency in Hz, 40 - 1000 (1600 according to example documentation?)
+#define I2C_PWM_FREQ            800       // PWM frequency in Hz, 40 - 1000 (1600 according to example documentation?)
 
-#define I2C_FAN_PIN             0       // If defined, FAN is connected to this pin of the PWM (and is assumed to be present)
-#define I2C_CONTROLLERFAN_PIN   1       // If defined, CONTROLLERFAN is connected to this pin of the PWM controller (and is assumed to be present)
+//#define I2C_FAN_PIN             0       // If defined, FAN is connected to this output of the PWM (and is assumed to be present)
+//#define I2C_CONTROLLERFAN_PIN   1       // If defined, CONTROLLERFAN is connected to this output of the PWM controller (and is assumed to be present)
 
 
 #include "Configuration_adv.h"
