@@ -867,6 +867,16 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 //#define I2C_FAN_PIN             0       // If defined, FAN is connected to this output of the PWM (and is assumed to be present)
 //#define I2C_CONTROLLERFAN_PIN   1       // If defined, CONTROLLERFAN is connected to this output of the PWM controller (and is assumed to be present)
 
+/**********************************************************************\
+ * Support for non-timing-critical inputs and outputs to be connected
+ * to a PCF8574 I2C port expander. Uses PCF8574 library by Rob Tillaart
+ * https://github.com/RobTillaart/Arduino/tree/master/libraries/PCF8574
+  **********************************************************************/
+// Uncomment below to enable
+//#define I2C_IO
+
+#define I2C_IO_ADDR             0x41
+
 
 #include "Configuration_adv.h"
 #include "thermistortables.h"
