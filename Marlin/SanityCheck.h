@@ -332,6 +332,21 @@
     #error TEMP_SENSOR_0 is required.
   #endif
 
+  #if ENABLED(I2C_PWM)
+    #if defined(I2C_FAN_PIN) && (I2C_FAN_PIN < 0 || I2C_FAN_PIN > 15)
+      #error Invalid I2C_FAN_PIN, must be between 0-15!
+    #endif
+    #if defined(I2C_CONTROLLERFAN_PIN) && (I2C_CONTROLLERFAN_PIN < 0 || I2C_CONTROLLERFAN_PIN > 15)
+      #error Invalid I2C_CONTROLLERFAN_PIN, must be between 0-15!
+    #endif
+    #if defined(I2C_CONTROLLERFAN_PIN) && defined(I2C_FAN_PIN) && I2C_CONTROLLERFAN_PIN == I2C_FAN_PIN
+      #error I2C_FAN_PIN and I2C_CONTROLLERFAN_PIN must not be identical!
+    #endif
+    #if !defined(I2C_PWM_FREQ) || I2C_PWM_FREQ < 1 || I2C_PWM_FREQ > 1600
+      #error Invalid I2C_PWM_FREQ setting, must be 1-1600!
+    #endif
+  #endif
+
   /**
    * Warnings for old configurations
    */
