@@ -6751,7 +6751,7 @@ void plan_arc(
   set_current_to_destination();
 }
 
-#if HAS_CONTROLLERFAN
+#if HAS_CONTROLLERFAN || HAS_I2C_CONTROLLERFAN
 
   void controllerFan() {
     static millis_t lastMotor = 0;      // Last time a motor was turned on
@@ -6778,8 +6778,12 @@ void plan_arc(
       }
       uint8_t speed = (lastMotor == 0 || ms >= lastMotor + (CONTROLLERFAN_SECS * 1000UL)) ? 0 : CONTROLLERFAN_SPEED;
       // allows digital or PWM fan output to be used (see M42 handling)
-      digitalWrite(CONTROLLERFAN_PIN, speed);
-      analogWrite(CONTROLLERFAN_PIN, speed);
+      #if HAS_I2C_CONTROLLERFAN
+        i2cpwm.setPin(I2C_CONTROLLERFAN_PIN, speed ? (speed + 1) * 16 : 0, 0);    // I2C_PWM range is 0-4095, adapt range
+      #else
+        digitalWrite(CONTROLLERFAN_PIN, speed);
+        analogWrite(CONTROLLERFAN_PIN, speed);
+      #endif // HAS_I2C_CONTROLLERFAN
     }
   }
 
@@ -7004,7 +7008,7 @@ void manage_inactivity(bool ignore_stepper_queue/*=false*/) {
     }
   #endif
 
-  #if HAS_CONTROLLERFAN
+  #if HAS_CONTROLLERFAN || HAS_I2C_CONTROLLERFAN
     controllerFan(); // Check if fan should be turned on to cool stepper drivers down
   #endif
 

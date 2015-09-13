@@ -863,7 +863,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 #define I2C_PWM_FREQ            800     // PWM frequency in Hz, 40 - 1000 (1600 according to example documentation?)
 
 #define I2C_FAN_PIN             0       // If defined, FAN is connected to this pin of the PWM (and is assumed to be present)
-//#define I2C_CONTROLLERFAN_PIN   1       // If defined, CONTROLLERFAN is connected to this pin of the PWM controller (and is assumed to be present)
+#define I2C_CONTROLLERFAN_PIN   1       // If defined, CONTROLLERFAN is connected to this pin of the PWM controller (and is assumed to be present)
 
 
 #include "Configuration_adv.h"
