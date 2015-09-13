@@ -205,7 +205,7 @@
     #endif
     #if ENABLED(U8GLIB_SSD1306)
       #undef HAS_LCD_CONTRAST
-    #endif  
+    #endif
   #endif
 
 #else // CONFIGURATION_LCD
@@ -287,11 +287,11 @@
 
    /**
     * Sled Options
-    */ 
+    */
   #if ENABLED(Z_PROBE_SLED)
     #define Z_SAFE_HOMING
   #endif
-  
+
   /**
    * MAX_STEP_FREQUENCY differs for TOSHIBA
    */
@@ -482,6 +482,15 @@
   #define HAS_E1_STEP (PIN_EXISTS(E1_STEP))
   #define HAS_E2_STEP (PIN_EXISTS(E2_STEP))
   #define HAS_E3_STEP (PIN_EXISTS(E3_STEP))
+
+  // Devices connected to I2C_PWM exist
+  #ifdef I2C_FAN_PIN
+    #define HAS_FAN 1
+  #endif // I2C_FAN_PIN
+  #ifdef I2C_CONTROLLERFAN_PIN
+    #define HAS_CONTROLLERFAN 1
+  #endif // I2C_CONTROLLERFAN_PIN
+
 
   /**
    * Helper Macros for heaters and extruder fan
