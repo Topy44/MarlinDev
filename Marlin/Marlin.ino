@@ -64,3 +64,7 @@
   #include <SPI.h>
   #include <L6470.h>
 #endif
+
+#if ENABLED(I2C_PWM)
+  #include <Adafruit_PWMServoDriver.h>
+#endif

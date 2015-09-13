@@ -40,6 +40,10 @@
   #include "mesh_bed_leveling.h"
 #endif
 
+#if ENABLED(I2C_PWM)
+  #include <Adafruit_PWMServoDriver.h>
+#endif
+
 #include "ultralcd.h"
 #include "planner.h"
 #include "stepper.h"
@@ -232,6 +236,10 @@
 
 #if ENABLED(SDSUPPORT)
   CardReader card;
+#endif
+
+#if ENABLED(I2C_PWM)
+  Adafruit_PWMServoDriver i2cpwm(I2C_PWM_ADDR);
 #endif
 
 bool Running = true;
@@ -637,6 +645,11 @@ void setup() {
 
   #if HAS_STEPPER_RESET
     disableStepperDrivers();
+  #endif
+
+  #if ENABLED(I2C_PWM)
+    i2cpwm.begin();
+    i2cpwm.setPWMFreq(I2C_PWM_FREQ);
   #endif
 
   MYSERIAL.begin(BAUDRATE);
@@ -3001,7 +3014,7 @@ inline void gcode_G28() {
           #endif
 
           probePointCounter++;
-  
+
           idle();
 
         } //xProbe
@@ -3877,7 +3890,7 @@ inline void gcode_M105() {
   SERIAL_EOL;
 }
 
-#if HAS_FAN
+#if HAS_FAN || HAS_I2C_FAN
 
   /**
    * M106: Set Fan Speed
@@ -5884,7 +5897,7 @@ void process_next_command() {
           break;
       #endif // HAS_TEMP_BED
 
-      #if HAS_FAN
+      #if HAS_FAN || HAS_I2C_FAN
         case 106: // M106: Fan On
           gcode_M106();
           break;

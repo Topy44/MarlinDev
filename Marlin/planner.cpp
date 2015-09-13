@@ -59,6 +59,11 @@
   #include "mesh_bed_leveling.h"
 #endif
 
+#if ENABLED(I2C_PWM)
+  #include <Adafruit_PWMServoDriver.h>
+  extern Adafruit_PWMServoDriver i2cpwm;
+#endif
+
 //===========================================================================
 //============================= public variables ============================
 //===========================================================================
@@ -427,7 +432,7 @@ void check_axes_activity() {
     disable_e3();
   }
 
-  #if HAS_FAN
+  #if HAS_FAN || HAS_I2C_FAN
     #ifdef FAN_KICKSTART_TIME
       static millis_t fan_kick_end;
       if (tail_fan_speed) {
@@ -448,11 +453,13 @@ void check_axes_activity() {
     #else
       #define CALC_FAN_SPEED tail_fan_speed
     #endif // FAN_MIN_PWM
-    #if ENABLED(FAN_SOFT_PWM)
+    #if HAS_I2C_FAN
+      i2cpwm.setPin(I2C_FAN_PIN, CALC_FAN_SPEED ? (CALC_FAN_SPEED + 1) * 16 : 0, 0);    // I2C_PWM range is 0-4095, adapt range
+    #elif ENABLED(FAN_SOFT_PWM)
       fanSpeedSoftPwm = CALC_FAN_SPEED;
     #else
       analogWrite(FAN_PIN, CALC_FAN_SPEED);
-    #endif // FAN_SOFT_PWM
+    #endif // ENABLED(I2C_PWM) && HAS_I2C_FAN
   #endif // HAS_FAN
 
   #if ENABLED(AUTOTEMP)
